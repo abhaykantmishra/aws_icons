@@ -91,8 +91,8 @@ export default function Component() {
   const handleDownload = (icon: IconFile) => {
     // Create a temporary link to download the file
     const link = document.createElement("a")
-    link.href = `/icons/${icon.path}`
-    link.download = `/icons/${icon.name}`
+    link.href = `${icon.path}`
+    link.download = `${icon.name}`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -101,7 +101,7 @@ export default function Component() {
   const handleCopyIcon = (icon: IconFile) => {
     // Copy the icon URL to clipboard
     const location = window.location.origin
-    navigator.clipboard.writeText(`${location}/icons/${icon.path}`)
+    navigator.clipboard.writeText(`${location}/${icon.path}`)
       .then(() => {
         alert("Icon URL copied to clipboard!")
       })
@@ -112,7 +112,7 @@ export default function Component() {
 
   const handleViewIcon = (icon: IconFile) => {
     // Open the icon in a new tab
-    window.open(`/icons/${icon.path}`, "_blank")
+    window.open(`${icon.path}`, "_blank")
   }
 
   const formatFileSize = (bytes?: number) => {
@@ -265,7 +265,7 @@ export default function Component() {
                   <CardContent className="p-6">
                     <div className="aspect-square bg-gradient-to-br from-rose-50 to-blue-50 rounded-lg mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                       <Image
-                        src={`/icons/${icon.path}` || "/placeholder.svg"}
+                        src={`${icon.path}` || "/placeholder.svg"}
                         alt={icon.name}
                         width={80}
                         height={80}
