@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
+import {iconDetails} from "@/app/icons"
 
 interface IconFile {
   name: string
@@ -13,16 +14,20 @@ interface IconFile {
   relativePath: string
   directory: string
   size?: number
-  lastModified?: Date
+  lastModified?: string
   depth: number
 }
 
-interface SearchResponse {
-  icons: IconFile[]
-  total: number
-  query: string
-  directories: string[]
-}
+// const filteredIcons: {
+//     name: string;
+//     path: string;
+//     relativePath: string;
+//     directory: string;
+//     size: number;
+//     lastModified: string;
+//     depth: number;
+// }[]
+
 
 export default function Component() {
 
@@ -40,20 +45,22 @@ export default function Component() {
     setError(null)
 
     try {
-      let url = `/api/search-icons?q=${encodeURIComponent(query)}`
-      if (directory) {
-        url += `&filter_dir=${encodeURIComponent(directory)}`
-      }
+      // const { iconsdetails } = await import('@icons.js') // Adjust path as needed
 
-      const response = await fetch(url)
+      const filteredIcons = iconDetails.filter((icon) => {
+        const nameMatch = icon.name.toLowerCase().includes(query.toLowerCase())
+        const dirMatch = directory
+          ? icon.path.toLowerCase().includes(directory.toLowerCase())
+          : true
+        return nameMatch && dirMatch
+      })
 
-      if (!response.ok) {
-        throw new Error("Failed to search icons")
-      }
+      const uniqueDirs = Array.from(
+        new Set(filteredIcons.map((icon) => icon.path.split('/')[0]))
+      )
 
-      const data: SearchResponse = await response.json()
-      setIcons(data.icons)
-      setDirectories(data.directories)
+      setIcons(filteredIcons)
+      setDirectories(uniqueDirs)
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred")
       setIcons([])

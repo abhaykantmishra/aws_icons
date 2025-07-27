@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 import path from 'path'
 
 const iconsDir = path.join(process.cwd(), 'public/icons')
-const outputFile = path.join(process.cwd(), 'app/icons.json')
+const outputFile = path.join(process.cwd(), 'app/icons.ts')
 
 async function getAllIconFiles(dirPath, baseDir = iconsDir, depth = 0, maxDepth = 10) {
   const files = []
@@ -40,7 +40,7 @@ async function getAllIconFiles(dirPath, baseDir = iconsDir, depth = 0, maxDepth 
 }
 
 const allIcons = await getAllIconFiles(iconsDir)
-await fs.writeFile(outputFile, JSON.stringify(allIcons, null, 2))
+await fs.writeFile(outputFile, `export const iconDetails = ${JSON.stringify(allIcons, null, 2)}`)
 
-console.log(`✅ Generated ${allIcons.length} icons to icons.json`)
+console.log(`✅ Generated ${allIcons.length} icons`)
 console.log(`📂 Output file: ${outputFile}`)
