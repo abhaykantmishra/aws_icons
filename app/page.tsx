@@ -1,13 +1,11 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef } from "react"
 import { Search, Download, ExternalLink, Zap, Shield, Globe, Loader2, Copy } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { DirectoryFilter } from "@/components/directory-filter"
 
 interface IconFile {
   name: string
@@ -33,7 +31,7 @@ export default function Component() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [directories, setDirectories] = useState<string[]>([])
-  const [selectedDirectory, setSelectedDirectory] = useState<string | null>(null)
+  const [selectedDirectory] = useState<string | null>(null)
 
   
   // Function to search icons via API
@@ -320,7 +318,7 @@ export default function Component() {
                 <Search className="w-8 h-8 text-slate-400" />
               </div>
               <h3 className="text-lg font-medium text-slate-800 mb-2">No icons found</h3>
-              <p className="text-slate-600">Try searching for different keywords like "ec2", "lambda", or "s3"</p>
+              <p className="text-slate-600">Try searching for different keywords like &quot;ec2&quot;, &quot;lambda&quot;, or &quot;s3&quot;</p>
             </div>
           )}
         </div>
@@ -338,7 +336,7 @@ export default function Component() {
           <p className="text-slate-600 mb-4">
             High-quality AWS service icons for your architecture diagrams and presentations.
           </p>
-          <p className="text-sm text-slate-500">© 2024 AWS Icons Hub. All icons are publicly available for use.</p>
+          <p className="text-sm text-slate-500">©{new Date().getFullYear()} AWS Icons Hub. All icons are publicly available for use.</p>
         </div>
       </footer>
     </div>
