@@ -21,7 +21,7 @@ export interface SearchResponse {
 
 async function searchIconFiles(
   searchTerm = "",
-  jsonFile = "public/icons.json",
+  jsonFile = "/app/icons.json",
   filterDir?: string,
 ): Promise<{
   icons: IconFile[]
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
     const query = searchParams.get("q") || ""
     const filterDir = searchParams.get("filter_dir") || undefined
 
-    const { icons, directories } = await searchIconFiles(query, "public/icons.json", filterDir)
+    const { icons, directories } = await searchIconFiles(query, "/app/icons.json", filterDir)
 
     const response: SearchResponse = {
       icons,

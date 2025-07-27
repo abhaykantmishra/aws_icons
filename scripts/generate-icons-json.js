@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 import path from 'path'
 
 const iconsDir = path.join(process.cwd(), 'public/icons')
-const outputFile = path.join(process.cwd(), 'public/icons.json')
+const outputFile = path.join(process.cwd(), 'app/icons.json')
 
 async function getAllIconFiles(dirPath, baseDir = iconsDir, depth = 0, maxDepth = 10) {
   const files = []
